@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, LayersControl, Marker, useMap, useMapEvents } 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import ubicaciones from './ubicaciones'; // Importa las ubicaciones desde el archivo de datos
 
 // Componente para controlar las rutas
 const RoutingControl = ({ waypoints }) => {
@@ -48,17 +49,6 @@ const MapaSilly = () => {
         popupAnchor: [1, -34],
     });
 
-    const ubicaciones = [
-        { lat: 21.942125, lng: -102.247522, texto: "Edificio A", detalle: "Edificio principal con oficinas y salas de reuniones." },
-        { lat: 21.941976, lng: -102.248214, texto: "Edificio B", detalle: "Laboratorios y salas de informática." },
-        { lat: 21.942202, lng: -102.246299, texto: "Edificio C", detalle: "Biblioteca y sala de estudio." },
-        { lat: 21.942800, lng: -102.247126, texto: "Cafetería", detalle: "Cafetería con servicio de desayuno y almuerzo." },
-        { lat: 21.942576, lng: -102.246857, texto: "Velaria", detalle: "Área de eventos al aire libre." },
-        { lat: 21.941711, lng: -102.246489, texto: "Entrada", detalle: "Entrada principal al campus." },
-        { lat: 21.942209, lng: -102.245715, texto: "Cancha de Fútbol", detalle: "Campo de fútbol para actividades deportivas." },
-        { lat: 21.941485, lng: -102.248048, texto: "Cancha de Americano", detalle: "Campo de fútbol americano." },
-    ];
-
     const [waypoints, setWaypoints] = useState([L.latLng(21.941711, -102.246489)]);
     const [selectedInfo, setSelectedInfo] = useState(null); // Estado para la información seleccionada
 
@@ -82,9 +72,9 @@ const MapaSilly = () => {
             {/* Contenedor para el card a la izquierda */}
             <div style={{ width: '300px', padding: '10px', backgroundColor: '#f8f9fa', borderRight: '1px solid #dee2e6', display: selectedInfo ? 'block' : 'none' }}>
                 {selectedInfo && (
-                    <div>
+                    <div style={{ textAlign: 'left' }}>
                         <h3>{selectedInfo.texto}</h3>
-                        <p>{selectedInfo.detalle}</p>
+                        <div style={{ whiteSpace: 'pre-wrap' }}>{selectedInfo.detalle}</div>
                     </div>
                 )}
             </div>
@@ -96,7 +86,7 @@ const MapaSilly = () => {
                     zoom={20}
                     ref={mapRef}
                     scrollWheelZoom={true}
-                    style={{ height: "100vh", width: "100%" }}
+                    style={{ height: "85vh", width: "100%" }}
                     zoomControl={true}
                 >
                     <MapClickHandler />
